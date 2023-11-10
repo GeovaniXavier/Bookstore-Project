@@ -1,6 +1,8 @@
 package com.example.livraria.controller;
 
+import com.example.livraria.dto.CategoriaDto;
 import com.example.livraria.entity.Categoria;
+import com.example.livraria.mapper.CategoriaMapper;
 import com.example.livraria.service.CategoriaService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -18,14 +20,18 @@ public class CategoriaController {
     private CategoriaService categoriaService;
 
     @GetMapping
-    public ResponseEntity<List<Categoria>> findAll() {
-        return ResponseEntity.ok().body(categoriaService.findAll());
+    public ResponseEntity<List<CategoriaDto>> findAll() {
+        List<Categoria> categorias = categoriaService.findAll();
+        List<CategoriaDto> categoriasDto = CategoriaMapper.transformaListaCategoriaEmListaCategoriaDto(categorias);
+        return ResponseEntity.ok().body(categoriasDto);
     }
 
     @PostMapping
-    @Transactional
-    public ResponseEntity<Categoria> save(@RequestBody @Valid Categoria categoria) {
-        return ResponseEntity.ok().body(categoriaService.save(categoria));
+    public ResponseEntity<CategoriaDto> save(@RequestBody @Valid CategoriaDto categoriaDto) {
+        Categoria categoria = CategoriaMapper.transformaCategoriaDtoEmCategoria(categoriaDto);
+        Categoria categoriaSalva = categoriaService.save(categoria);
+        CategoriaDto categoriaDtoSalva = CategoriaMapper.transformaCategoriaEmCategoriaDto(categoriaSalva);
+        return ResponseEntity.ok().body(categoriaDtoSalva);
     }
 }
 

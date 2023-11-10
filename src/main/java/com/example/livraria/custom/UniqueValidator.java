@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class UniqueValidator implements ConstraintValidator<Unique, Object> {
 
     @Autowired
-    private AutorRepository autorRepository; // Substitua YourRepository pelo nome do seu repositório Spring Data JPA.
+    private AutorRepository autorRepository;
 
     @Autowired
     private AutorService autorService;
