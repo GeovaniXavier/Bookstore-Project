@@ -1,8 +1,10 @@
 package com.example.livraria.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import com.example.livraria.custom.Unique;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Categoria {
@@ -11,9 +13,8 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @NotBlank
-    @Column(unique = true)
+
+    @Unique(domainClass = Categoria.class, fieldName = "nome", message = "Nome já está em uso")
     private String nome;
 
     public Categoria() {

@@ -1,7 +1,9 @@
 package com.example.livraria.dto;
 
+import com.example.livraria.custom.Unique;
+import com.example.livraria.entity.Autor;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
@@ -11,12 +13,10 @@ public class AutorDto {
 
     private Long id;
 
-    @NotNull
+    @JsonFormat(pattern = "dd/MM/yyyy H:mm:s")
     private LocalDateTime instante;
 
-    @NotNull
-    @Email
-    @Column(unique = true)
+    @Unique(domainClass = Autor.class, fieldName = "email", message = "Email já está em uso")
     private String email;
 
     @NotNull

@@ -1,41 +1,42 @@
 package com.example.livraria.custom;
 
-import com.example.livraria.entity.Autor;
-import com.example.livraria.repository.AutorRepository;
-import com.example.livraria.repository.CategoriaRepository;
-import com.example.livraria.service.AutorService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class UniqueValidator implements ConstraintValidator<Unique, Object> {
 
+    private String domainField;
+    private Class<?> klass;
     @Autowired
-    private AutorRepository autorRepository;
-
-    @Autowired
-    private AutorService autorService;
-
-    @Autowired
-    private CategoriaRepository categoriaRepository;
+    private EntityManager em;
 
     @Override
-    public void initialize(Unique constraintAnnotation) {
-
+    public void initialize(Unique params) {
+        domainField = params.fieldName();
+        klass = params.domainClass();
     }
 
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         if (value == null) {
-            return true; // Trate o caso de valor nulo conforme necessário
+            // Valor nulo é considerado válido, altere conforme necessário
+            return true;
         }
 
-        Autor autor = (Autor) value;
+        String jpql = "SELECT COUNT(e) FROM " + klass.getSimpleName() + " e WHERE e." + domainField + " = :value";
 
-        if (autorRepository.isValueUnique(autor)) {
-            return true;
-        } else {
-            return false;
+        try {
+            Long count = em.createQuery(jpql, Long.class)
+                    .setParameter("value", value)
+                    .getSingleResult();
+
+            return count == 0;
+        } catch (NoResultException e) {
+            return true; // Trate como válido se nenhum resultado for encontrado
         }
     }
+
 }

@@ -1,16 +1,13 @@
 package com.example.livraria.dto;
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import com.example.livraria.custom.Unique;
+import com.example.livraria.entity.Categoria;
 
 public class CategoriaDto {
 
     private Long id;
 
-    @NotNull
-    @NotBlank
-    @Column(unique = true)
+    @Unique(domainClass = Categoria.class, fieldName = "nome", message = "Nome já está em uso")
     private String nome;
 
     public CategoriaDto() {
