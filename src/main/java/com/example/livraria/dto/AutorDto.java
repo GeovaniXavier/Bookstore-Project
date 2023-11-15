@@ -22,7 +22,6 @@ public class AutorDto {
     @NotNull
     private String nome;
 
-
     @Column(length = 400)
     @NotNull
     private String descricao;

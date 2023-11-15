@@ -13,8 +13,6 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    @Unique(domainClass = Categoria.class, fieldName = "nome", message = "Nome já está em uso")
     private String nome;
 
     public Categoria() {

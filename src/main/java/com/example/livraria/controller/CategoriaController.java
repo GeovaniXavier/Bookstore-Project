@@ -33,6 +33,7 @@ public class CategoriaController {
         CategoriaDto categoriaDtoSalva = CategoriaMapper.transformaCategoriaEmCategoriaDto(categoriaSalva);
         return ResponseEntity.ok().body(categoriaDtoSalva);
     }
+
 }
 
 

@@ -8,9 +8,7 @@ import java.util.List;
 public class AutorMapper {
 
 
-
-
-    public static AutorDto transformaAutorEmAutorDto(Autor autor){
+    public static AutorDto transformaAutorEmAutorDto(Autor autor) {
         AutorDto dto = new AutorDto();
         dto.setId(autor.getId());
         dto.setInstante(autor.getInstante());
@@ -20,7 +18,7 @@ public class AutorMapper {
         return dto;
     }
 
-    public static Autor transformaAutorDtoEmAutor(AutorDto dto){
+    public static Autor transformaAutorDtoEmAutor(AutorDto dto) {
         Autor autor = new Autor();
         autor.setId(dto.getId());
         autor.setInstante(dto.getInstante());
@@ -30,7 +28,7 @@ public class AutorMapper {
         return autor;
     }
 
-    public static List<AutorDto> transformaListaAutorEmListaAutorDto(List<Autor> autores){
+    public static List<AutorDto> transformaListaAutorEmListaAutorDto(List<Autor> autores) {
         List<AutorDto> dtos = null;
         for (Autor autor : autores) {
             dtos.add(transformaAutorEmAutorDto(autor));
@@ -38,7 +36,7 @@ public class AutorMapper {
         return dtos;
     }
 
-    public static List<Autor> transformaListaAutorDtoEmListaAutor(List<AutorDto> dtos){
+    public static List<Autor> transformaListaAutorDtoEmListaAutor(List<AutorDto> dtos) {
         List<Autor> autores = null;
         for (AutorDto dto : dtos) {
             autores.add(transformaAutorDtoEmAutor(dto));

@@ -18,8 +18,6 @@ public class Autor {
     @JsonFormat(pattern = "dd/MM/yyyy H:mm:s")
     private LocalDateTime instante;
 
-
-    @Unique(domainClass = Autor.class, fieldName = "email", message = "Email já está em uso")
     private String email;
 
     @NotNull
