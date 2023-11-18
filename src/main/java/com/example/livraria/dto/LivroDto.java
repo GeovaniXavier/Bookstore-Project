@@ -1,14 +1,17 @@
-package com.example.livraria.entity;
+package com.example.livraria.dto;
 
-import jakarta.persistence.*;
+import com.example.livraria.custom.Unique;
+import com.example.livraria.entity.Livro;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotNull;
 
-@Entity
-public class Livro {
+public class LivroDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @Unique(domainClass = Livro.class, fieldName = "titulo", message = "Título já está em uso")
     private String titulo;
 
     @Column(length = 500)
@@ -25,15 +28,15 @@ public class Livro {
     private String dataPublicacao;
 
     @OneToOne
-    private Categoria Categoria;
+    private Long CategoriaId;
 
     @OneToOne
-    private Autor Autor;
+    private Long AutorId;
 
-    public Livro() {
+    public LivroDto() {
     }
 
-    public Livro(Long id, String titulo, String resumo, String sumario, Double preco, Integer numeroPaginas, String isbn, String dataPublicacao, com.example.livraria.entity.Categoria categoria, com.example.livraria.entity.Autor autor) {
+    public LivroDto(Long id, String titulo, String resumo, String sumario, Double preco, Integer numeroPaginas, String isbn, String dataPublicacao, Long categoriaId, Long autorId) {
         this.id = id;
         this.titulo = titulo;
         this.resumo = resumo;
@@ -42,8 +45,8 @@ public class Livro {
         this.numeroPaginas = numeroPaginas;
         this.isbn = isbn;
         this.dataPublicacao = dataPublicacao;
-        Categoria = categoria;
-        Autor = autor;
+        CategoriaId = categoriaId;
+        AutorId = autorId;
     }
 
     public Long getId() {
@@ -110,19 +113,19 @@ public class Livro {
         this.dataPublicacao = dataPublicacao;
     }
 
-    public com.example.livraria.entity.Categoria getCategoria() {
-        return Categoria;
+    public Long getCategoriaId() {
+        return CategoriaId;
     }
 
-    public void setCategoria(com.example.livraria.entity.Categoria categoria) {
-        Categoria = categoria;
+    public void setCategoriaId(Long categoriaId) {
+        CategoriaId = categoriaId;
     }
 
-    public com.example.livraria.entity.Autor getAutor() {
-        return Autor;
+    public Long getAutorId() {
+        return AutorId;
     }
 
-    public void setAutor(com.example.livraria.entity.Autor autor) {
-        Autor = autor;
+    public void setAutorId(Long autorId) {
+        AutorId = autorId;
     }
 }
