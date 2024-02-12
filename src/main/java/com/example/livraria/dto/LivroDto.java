@@ -1,7 +1,6 @@
 package com.example.livraria.dto;
 
-import com.example.livraria.custom.Unique;
-import com.example.livraria.entity.Livro;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +10,7 @@ public class LivroDto {
     private Long id;
 
     @NotNull
-    @Unique(domainClass = Livro.class, fieldName = "titulo", message = "Título já está em uso")
+    //@Unique(domainClass = Livro.class, fieldName = "titulo", message = "Título já está em uso")
     private String titulo;
 
     @Column(length = 500)
@@ -28,10 +27,13 @@ public class LivroDto {
     private String dataPublicacao;
 
     @OneToOne
-    private Long CategoriaId;
+    @JsonProperty("categoria_id")
+    private Long categoriaId;
 
     @OneToOne
-    private Long AutorId;
+    @JsonProperty("autor_id")
+    private Long autorId;
+
 
     public LivroDto() {
     }
@@ -45,8 +47,8 @@ public class LivroDto {
         this.numeroPaginas = numeroPaginas;
         this.isbn = isbn;
         this.dataPublicacao = dataPublicacao;
-        CategoriaId = categoriaId;
-        AutorId = autorId;
+        this.categoriaId = categoriaId;
+        this.autorId = autorId;
     }
 
     public Long getId() {
@@ -114,18 +116,18 @@ public class LivroDto {
     }
 
     public Long getCategoriaId() {
-        return CategoriaId;
+        return categoriaId;
     }
 
     public void setCategoriaId(Long categoriaId) {
-        CategoriaId = categoriaId;
+        this.categoriaId = categoriaId;
     }
 
     public Long getAutorId() {
-        return AutorId;
+        return autorId;
     }
 
     public void setAutorId(Long autorId) {
-        AutorId = autorId;
+        this.autorId = autorId;
     }
 }

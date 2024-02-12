@@ -4,11 +4,11 @@ import com.example.livraria.dto.LivroDto;
 import com.example.livraria.entity.Livro;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LivroMapper {
 
-
-    public static LivroDto TransformarEntidadeEmDto(Livro livro) {
+    public static LivroDto transformarEntidadeEmDto(Livro livro) {
         LivroDto livroDto = new LivroDto();
         livroDto.setId(livro.getId());
         livroDto.setTitulo(livro.getTitulo());
@@ -18,12 +18,12 @@ public class LivroMapper {
         livroDto.setNumeroPaginas(livro.getNumeroPaginas());
         livroDto.setIsbn(livro.getIsbn());
         livroDto.setDataPublicacao(livro.getDataPublicacao());
-        livroDto.setCategoriaId(livro.getCategoria().getId());
         livroDto.setAutorId(livro.getAutor().getId());
+        livroDto.setCategoriaId(livro.getCategoria().getId());
         return livroDto;
     }
 
-    public static Livro TransformarDtoEmEntidade(LivroDto livroDto) {
+    public static Livro transformarDtoEmEntidade(LivroDto livroDto) {
         Livro livro = new Livro();
         livro.setId(livroDto.getId());
         livro.setTitulo(livroDto.getTitulo());
@@ -33,14 +33,13 @@ public class LivroMapper {
         livro.setNumeroPaginas(livroDto.getNumeroPaginas());
         livro.setIsbn(livroDto.getIsbn());
         livro.setDataPublicacao(livroDto.getDataPublicacao());
+
         return livro;
     }
 
-    public static List<LivroDto> transformaListaLivroEmListaLivroDto(List<Livro> all) {
-        List<LivroDto> dtos = null;
-        for (Livro livro : all) {
-            dtos.add(TransformarEntidadeEmDto(livro));
-        }
-        return dtos;
+    public static List<LivroDto> transformarListaLivroEmListaLivroDto(List<Livro> all) {
+        return all.stream()
+                .map(LivroMapper::transformarEntidadeEmDto)
+                .collect(Collectors.toList());
     }
 }

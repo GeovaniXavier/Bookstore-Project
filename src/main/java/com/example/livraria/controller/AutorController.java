@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,7 +23,10 @@ public class AutorController {
     @GetMapping
     public ResponseEntity<List<AutorDto>> findAll() {
         List<Autor> autores = autorService.findAll();
-        List<AutorDto> autoresDto = AutorMapper.transformaListaAutorEmListaAutorDto(autores);
+        List<AutorDto> autoresDto = new ArrayList<>();
+        for (Autor autor : autores) {
+            autoresDto.add(AutorMapper.transformaAutorEmAutorDto(autor));
+        }
         return ResponseEntity.ok().body(autoresDto);
     }
 

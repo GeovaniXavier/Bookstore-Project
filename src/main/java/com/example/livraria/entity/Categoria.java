@@ -1,6 +1,7 @@
 package com.example.livraria.entity;
 
-import com.example.livraria.custom.Unique;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +19,8 @@ public class Categoria {
     public Categoria() {
     }
 
-    public Categoria(Long id, String nome) {
+    @JsonCreator
+    public Categoria(@JsonProperty("id") Long id, String nome) {
         this.id = id;
         this.nome = nome;
     }
