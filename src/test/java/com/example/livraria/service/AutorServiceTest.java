@@ -3,7 +3,6 @@ package com.example.livraria.service;
 import com.example.livraria.dto.AutorDto;
 import com.example.livraria.entity.Autor;
 import com.example.livraria.repository.AutorRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,6 +12,9 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class AutorServiceTest {
 
@@ -27,24 +29,37 @@ class AutorServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        startUser();
+        startAutor();
     }
 
     @Test
     void save() {
         Mockito.when(autorRepository.save(autor)).thenReturn(autor);
         Autor autorSaved = autorService.save(autor);
-        Assertions.assertEquals(autor, autorSaved);
+        assertNotNull(autorSaved);
+        assertEquals(autor, autorSaved);
+
+        assertEquals(autor.getId(), autorSaved.getId());
+        assertEquals(autor.getNome(), autorSaved.getNome());
+        assertEquals(autor.getDescricao(), autorSaved.getDescricao());
+        assertEquals(autor.getEmail(), autorSaved.getEmail());
     }
 
     @Test
     void findAll() {
         Mockito.when(autorRepository.findAll()).thenReturn(List.of(autor));
         List<Autor> autores = autorService.findAll();
-        Assertions.assertEquals(1, autores.size());
+        assertNotNull(autores);
+        assertEquals(1, autores.size());
+
+        Autor autor = autores.get(0);
+        assertEquals(this.autor.getId(), autor.getId());
+        assertEquals(this.autor.getNome(), autor.getNome());
+        assertEquals(this.autor.getDescricao(), autor.getDescricao());
+        assertEquals(this.autor.getEmail(), autor.getEmail());
     }
 
-    private void startUser() {
+    private void startAutor() {
         autor = new Autor();
         autor.setId(1L);
         autor.setNome("Charles Dickens");

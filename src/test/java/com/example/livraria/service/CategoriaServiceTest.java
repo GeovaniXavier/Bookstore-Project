@@ -3,7 +3,6 @@ package com.example.livraria.service;
 import com.example.livraria.dto.CategoriaDto;
 import com.example.livraria.entity.Categoria;
 import com.example.livraria.repository.CategoriaRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -11,7 +10,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class CategoriaServiceTest {
 
@@ -37,14 +40,24 @@ class CategoriaServiceTest {
     void save() {
         Mockito.when(categoriaRepository.save(categoria)).thenReturn(categoria);
         Categoria categoriaSaved = categoriaService.save(categoria);
-        Assertions.assertEquals(categoria, categoriaSaved);
+        assertNotNull(categoriaSaved);
+        assertEquals(categoria, categoriaSaved);
+
+        assertEquals(categoria.getId(), categoriaSaved.getId());
+        assertEquals(categoria.getNome(), categoriaSaved.getNome());
     }
 
     @Test
     void findAll() {
         Mockito.when(categoriaRepository.findAll()).thenReturn(java.util.List.of(categoria));
-        java.util.List<Categoria> categorias = categoriaService.findAll();
-        Assertions.assertEquals(1, categorias.size());
+        List<Categoria> categorias = categoriaService.findAll();
+        assertNotNull(categorias);
+        assertEquals(1, categorias.size());
+
+        Categoria categoria = categorias.get(0);
+
+        assertEquals(this.categoria.getId(), categoria.getId());
+        assertEquals(this.categoria.getNome(), categoria.getNome());
     }
 
     private void startCategoria() {
